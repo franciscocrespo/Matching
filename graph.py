@@ -10,56 +10,59 @@ class Graph(object):
         self._obj = js.loads(json)
         self.len = len(self._obj)
 
-    def build(self):
+    def build_matrix(self):
+        """ Aca creamos la matriz de pesos y le restamos los mínimos a cada fila """
         matrix = 0
-        x = y = self.len
-        w = s = 0
+        var_x = var_y = self.len
+        var_w = var_s = 0
 
-        if x != 0:
-            self._asignaciones = [[0 for i in range(x)] for j in range(y)]
-            matrix = [[0 for i in range(x)] for j in range(y)]
-            for ka, va in self._obj.iteritems():
-                for kb, vb in va.iteritems():
-                    self._asignaciones[w][s] = (str(ka), str(kb))
-                    matrix[w][s] = int(vb)
-                    s = s + 1
-                w = w + 1
-                s = 0
+        if var_x != 0:
+            self._asignaciones = [[0 for i in range(var_x)] for j in range(var_y)]
+            matrix = [[0 for i in range(var_x)] for j in range(var_y)]
+            for var_va in self._obj:
+                for var_vb in self._obj[var_va]:
+                    print(self._obj[var_va][var_vb])
+                    self._asignaciones[var_w][var_s] = (str(var_va), str(var_vb))
+                    matrix[var_w][var_s] = int(self._obj[var_va][var_vb])
+                    var_s = var_s + 1
+                var_w = var_w + 1
+                var_s = 0
 
-                min = minimo_fila(matrix)
-                restar_minimos(matrix, min)
+                var_min = minimo_fila(matrix)
+                restar_minimos(matrix, var_min)
 
         return matrix
 
     def pesos_print(self, matrix):
         """ Imprime la matriz """
-        print matrix
+        print(matrix)
 
     def asignaciones_print(self):
         """ Imprime la matriz de asignados """
-        print self._asignaciones
+        print(self._asignaciones)
 
 
+# Funciones auxiliares
 def minimo_fila(matrix):
     """ Calculamos el minimo de cada fila y lo guardamos en un array """
-    n = len(matrix)
-    min = [0 for i in range(n)]
+    var_n = len(matrix)
+    var_min = [0 for i in range(var_n)]
     i = j = val = 0
-    while i < n:
-        while j < n - 1:
+    while i < var_n:
+        while j < var_n - 1:
             val = matrix[i][j]
             if val > matrix[i][j+1]:
                 val = matrix[i][j+1]
-            min[i] = val
+            var_min[i] = val
             j = j + 1
         i = i + 1
         j = 0
-    return min
+    return var_min
 
 def restar_minimos(matrix, min):
     """ Restamos el minimo a cada fila """
-    n = len(matrix)
-    for i in range(n):
-        for j in range(n):
+    var_n = len(matrix)
+    for i in range(var_n):
+        for j in range(var_n):
             matrix[i][j] = matrix[i][j] - min[i]
     return matrix
