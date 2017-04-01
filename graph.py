@@ -1,10 +1,12 @@
 """ Esta clase sirve para generar el grafo que tomara el algoritmo hungaro """
 import json as js
+from copy import deepcopy
 
 class Graph(object):
     """ Se construye la matriz de pesos a partir de un objeto json """
 
     asignaciones = [[]]
+    matriz_original = [[]]
 
     def __init__(self, json):
         self._obj = js.loads(json)
@@ -27,18 +29,25 @@ class Graph(object):
                 var_w = var_w + 1
                 var_s = 0
 
+            self.matriz_original = deepcopy(matrix)
             var_min = minimo_fila(matrix)
             restar_minimos(matrix, var_min)
 
         return matrix
 
-    def asignados(self):
+    def elementos_del_matching(self):
         """ devuelve los vertices del grafo, o sea los que se asignan """
         return self.asignaciones
 
-    def pesos_print(self, matrix):
-        """ Imprime la matriz """
-        print(matrix)
+    def matriz_pesos(self):
+        """ Devuelve la matríz con los pesos originales """
+        return self.matriz_original
+
+    def pesos_print(self):
+        """ Imprime la matriz con los pesos originales"""
+        var_n = self.len
+        for i in range(var_n):
+            print(self.matriz_original[i])
 
     def asignaciones_print(self):
         """ Imprime la matriz de asignados """
