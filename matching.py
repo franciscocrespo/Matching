@@ -20,8 +20,13 @@ if __name__ == "__main__":
 
     print('\nELEMENTOS MATCHEADOS:\n')
     __resultado__ = __matching__.resultado_matcheo(__elementos__, __pesos__)
-
     print(__resultado__)
+
+    print('\nINDICES DE LOS ELEMENTOS MATCHEADOS:\n')
+
+    __resultado_2__ = __matching__.indices_elementos_matcheados()
+    print(__resultado_2__)
+
 
 
     
